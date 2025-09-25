@@ -31,7 +31,7 @@ jobs:
           ajv validate
           -c ajv-formats
           -s _schemas/supplier/v1/supplier.schema.json
-          -d supplier.json
+          -d data/supplier.json
           --spec=draft2020
           --strict=true
 
