@@ -4,8 +4,6 @@ on:
   push:
     branches: [ dev ]
 
-# Wichtig: globale Permissions setzen,
-# damit der eingebaute GITHUB_TOKEN genug Rechte hat
 permissions:
   contents: write
   pull-requests: write
@@ -21,18 +19,36 @@ jobs:
     if: ${{ needs.validate.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Create/Update PR dev → main
-        id: cpr
-        uses: peter-evans/create-pull-request@v6
+      - name: Create or fetch PR dev → main
+        id: pr
+        uses: actions/github-script@v7
         with:
-          base: main
-          branch: dev
-          title: "Promote dev → main (auto)"
-          body: "Automatisch erstellt nach erfolgreichem Validation-Run."
-      
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            // offenen PR dev -> main suchen
+            const prs = await github.paginate(
+              github.rest.pulls.list,
+              { owner, repo, state: 'open', base: 'main', head: `${owner}:dev` }
+            );
+
+            let pr = prs[0];
+            if (!pr) {
+              const created = await github.rest.pulls.create({
+                owner, repo,
+                head: 'dev',
+                base: 'main',
+                title: 'Promote dev → main (auto)',
+                body: 'Automatisch erstellt nach erfolgreichem Validation-Run.'
+              });
+              pr = created.data;
+            }
+
+            core.setOutput('number', String(pr.number));
+
       - name: Enable auto-merge (squash)
-        if: ${{ steps.cpr.outputs.pull-request-number }}
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          pull-request-number: ${{ steps.pr.outputs.number }}
           merge-method: squash
