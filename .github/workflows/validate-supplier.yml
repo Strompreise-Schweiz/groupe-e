@@ -2,46 +2,65 @@ name: Promote dev → main (auto)
 
 on:
   push:
-    branches: [ dev ]   # bei jedem Push nach dev
+    branches: [ dev ]
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  # 1) Deine bestehende Validierung aus dem Reusable-Workflow
-  call:
+  validate:
     uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate_supplier.yml@main
     with:
       supplier_schema_version: v1
 
-  # 2) PR von dev → main erstellen oder aktualisieren
-  create_pr:
-    needs: call
-    if: ${{ needs.call.result == 'success' }}
+  promote:
+    needs: validate
+    if: ${{ needs.validate.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Create/Update PR dev -> main
-        id: cpr
-        uses: peter-evans/create-pull-request@v6
+      - name: Create or fetch PR dev → main
+        id: pr
+        uses: actions/github-script@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: dev
-          title: "Promote dev → main (auto)"
-          body: "Automatisch erstellt nach erfolgreichem Validation-Run."
-          update-existing: true
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: 'main',
+              head: `${context.repo.owner}:dev`
+            });
+            let pr = prs[0];
+            if (!pr) {
+              const created = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Promote dev → main (auto)',
+                head: 'dev',
+                base: 'main',
+                body: 'Automatisch erstellt nach erfolgreichem Validation-Run.'
+              });
+              pr = created.data;
+            }
+            core.setOutput('number', pr.number);
 
-  # 3) Auto-merge für genau diesen PR einschalten
-  enable_automerge:
-    needs: create_pr
-    if: ${{ needs.call.result == 'success' && steps.cpr.outputs.pull-request-number }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Enable PR auto-merge (squash)
-        uses: peter-evans/enable-pull-request-automerge@v3
+      - name: Enable auto-merge
+        uses: actions/github-script@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
+          script: |
+            await github.graphql(`
+              mutation($repoId:ID!, $prId:ID!) {
+                enablePullRequestAutoMerge(
+                  input: {pullRequestId: $prId, mergeMethod: SQUASH}
+                ) { clientMutationId }
+              }
+            `, {
+              repoId: (await github.rest.repos.get({
+                owner: context.repo.owner, repo: context.repo.repo
+              })).data.node_id,
+              prId: (await github.rest.pulls.get({
+                owner: context.repo.owner, repo: context.repo.repo,
+                pull_number: ${'${{ steps.pr.outputs.number }}'}
+              })).data.node_id
+            });
