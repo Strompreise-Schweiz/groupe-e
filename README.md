@@ -14,8 +14,7 @@ All data is structured in a machine-readable way to support integration with ext
 
 ## Data Validation
 
-Every dataset is automatically validated against the  
-[`supplier-data-validation`](https://github.com/Strompreise-Schweiz/supplier-data-validation) schemas using GitHub Actions. This ensures consistent structure and reliable data quality across suppliers.
+Every dataset is automatically validated against the [`supplier-data-validation`](https://github.com/Strompreise-Schweiz/supplier-data-validation) schemas using GitHub Actions. This ensures consistent structure and reliable data quality across suppliers.
 
 ## Usage
 
@@ -33,7 +32,6 @@ For more information about the initiative and to explore Swiss electricity tarif
 
 ## License
 
-The **data in the [`/data`](./data) folder** is licensed under the  
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+The data in the [`/data`](./data) folder is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 Logos and other materials in the [`/assets`](./assets) folder are provided for reference only and may be subject to separate rights.
