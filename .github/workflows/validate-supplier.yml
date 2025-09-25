@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Strompreise-Schweiz/strompreise-schemas
-          ref: v1
+          ref: main
           path: _schemas
 
       - uses: actions/setup-node@v4
