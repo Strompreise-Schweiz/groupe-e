@@ -22,11 +22,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm i -g ajv-cli@5
+
+      - name: Install ajv + formats
+        run: npm i -g ajv-cli@5 ajv-formats
 
       - name: Validate supplier.json
         run: >
           ajv validate
+          -c ajv-formats
           -s _schemas/supplier/v1/supplier.schema.json
           -d supplier.json
-          --spec=draft2020 --strict=true
+          --spec=draft2020
+          --strict=true
+
+      - name: Check logo.png exists and is 1000x1000
+        run: |
+          test -f logo.png || (echo "::error::logo.png missing" && exit 1)
+          sudo apt-get update && sudo apt-get install -y imagemagick
+          DIM=$(identify -format "%wx%h" logo.png)
+          [ "$DIM" = "1000x1000" ] || (echo "::error::logo.png is $DIM, expected 1000x1000" && exit 1)

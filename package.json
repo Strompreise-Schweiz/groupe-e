@@ -1,0 +1,15 @@
+{
+  "name": "groupe-e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "validate:supplier": "ajv validate -c ajv-formats -s ../strompreise-schemas/supplier/v1/supplier.schema.json -d ./data/supplier.json --spec=draft2020 --strict=true",
+    "validate": "npm run validate:supplier"
+  },
+  "keywords": [],
+  "author": "Philipp Bruhin",
+  "devDependencies": {
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.1"
+  }
+}
