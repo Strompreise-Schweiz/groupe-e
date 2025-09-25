@@ -1,43 +1,6 @@
-# .github/workflows/validate-supplier.yml
-name: Validate supplier.json (central schema)
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
+name: Validate (supplier & logo)
+on: [push, pull_request]
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Checkout central schema
-        uses: actions/checkout@v4
-        with:
-          repository: Strompreise-Schweiz/strompreise-schemas
-          ref: main
-          path: _schemas
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install ajv + formats
-        run: npm i -g ajv-cli@5 ajv-formats
-
-      - name: Validate supplier.json
-        run: >
-          ajv validate
-          -c ajv-formats
-          -s _schemas/supplier/v1/supplier.schema.json
-          -d data/supplier.json
-          --spec=draft2020
-          --strict=true
-
-      - name: Check logo.png exists and is 1000x1000
-        run: |
-          test -f logo.png || (echo "::error::logo.png missing" && exit 1)
-          sudo apt-get update && sudo apt-get install -y imagemagick
-          DIM=$(identify -format "%wx%h" logo.png)
-          [ "$DIM" = "1000x1000" ] || (echo "::error::logo.png is $DIM, expected 1000x1000" && exit 1)
+  call:
+    uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate.yml@main
