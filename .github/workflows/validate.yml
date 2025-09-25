@@ -1,0 +1,8 @@
+name: Validate assets & data
+on: [push, pull_request]
+
+jobs:
+  call_validate_supplier:
+    uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate_supplier.yml@main
+    with:
+      supplier_schema_version: v1
