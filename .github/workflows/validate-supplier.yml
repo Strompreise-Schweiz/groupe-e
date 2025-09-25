@@ -1,8 +1,47 @@
-name: Validate (supplier & logo)
-on: [push, pull_request]
+name: Promote dev → main (auto)
+
+on:
+  push:
+    branches: [ dev ]   # bei jedem Push nach dev
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
+  # 1) Deine bestehende Validierung aus dem Reusable-Workflow
   call:
     uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate_supplier.yml@main
     with:
       supplier_schema_version: v1
+
+  # 2) PR von dev → main erstellen oder aktualisieren
+  create_pr:
+    needs: call
+    if: ${{ needs.call.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create/Update PR dev -> main
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: dev
+          title: "Promote dev → main (auto)"
+          body: "Automatisch erstellt nach erfolgreichem Validation-Run."
+          update-existing: true
+
+  # 3) Auto-merge für genau diesen PR einschalten
+  enable_automerge:
+    needs: create_pr
+    if: ${{ needs.call.result == 'success' && steps.cpr.outputs.pull-request-number }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable PR auto-merge (squash)
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
