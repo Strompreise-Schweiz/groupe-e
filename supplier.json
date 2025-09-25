@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Strompreise-Schweiz/strompreise-schemas/v1/supplier/supplier.schema.json",
+  "id": "groupe-e",
+  "name": "Groupe E SA",
+  "location": {
+    "address": {
+      "street": "Route de Morat 135",
+      "postal_code": "1763",
+      "city": "Granges-Paccot",
+      "canton": "FR",
+      "country": "Switzerland"
+    },
+    "coordinates": {
+      "latitude": 46.8227460379253,
+      "longitude": 7.150157271164058
+    },
+    "map": {
+      "type": "google",
+      "url": "https://maps.app.goo.gl/fFqEcjEbGctZhEqc7",
+      "place_id": "ChIJKSUSBLNujkcRyCrQWjiGQd8"
+    }
+  },
+  "uid": "CHE-108.954.582",
+  "vse_id": "CH10063012345",
+  "website": "https://www.groupe-e.ch",
+  "email": "info@groupe-e.ch"
+}

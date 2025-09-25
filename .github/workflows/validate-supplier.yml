@@ -1,0 +1,32 @@
+# .github/workflows/validate-supplier.yml
+name: Validate supplier.json (central schema)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout central schema
+        uses: actions/checkout@v4
+        with:
+          repository: Strompreise-Schweiz/strompreise-schemas
+          ref: v1
+          path: _schemas
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm i -g ajv-cli@5
+
+      - name: Validate supplier.json
+        run: >
+          ajv validate
+          -s _schemas/supplier/v1/supplier.schema.json
+          -d supplier.json
+          --spec=draft2020 --strict=true
