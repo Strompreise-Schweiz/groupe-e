@@ -3,4 +3,6 @@ on: [push, pull_request]
 
 jobs:
   call:
-    uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate.yml@main
+    uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate_supplier.yml@main
+    with:
+      supplier_schema_version: v1
