@@ -8,7 +8,7 @@
       "postal_code": "1763",
       "city": "Granges-Paccot",
       "canton": "FR",
-      "country": "Switzerland"
+      "country": "CH"
     },
     "coordinates": {
       "latitude": 46.8227460379253,
@@ -16,8 +16,7 @@
     },
     "map": {
       "type": "google",
-      "url": "https://maps.app.goo.gl/fFqEcjEbGctZhEqc7",
-      "place_id": "ChIJKSUSBLNujkcRyCrQWjiGQd8"
+      "url": "https://maps.app.goo.gl/fFqEcjEbGctZhEqc7"
     }
   },
   "uid": "CHE-108.954.582",
