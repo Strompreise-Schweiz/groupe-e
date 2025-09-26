@@ -1,6 +1,6 @@
 # Groupe E Electricity Data
 
-This repository provides **open electricity data** for [Groupe E](./data/supplier.json).  It is part of the [Strompreise Schweiz](https://www.strompreise-schweiz.ch) initiative.
+This repository provides **open electricity data** for [groupe-e](./data/supplier.json).  It is part of the [Strompreise Schweiz](https://www.strompreise-schweiz.ch) initiative.
 
 ## Contents
 
