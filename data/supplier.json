@@ -1,6 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/Strompreise-Schweiz/strompreise-schemas/v1/supplier/supplier.schema.json",
-  "id": "groupe-e",
   "name": "Groupe E SA",
   "location": {
     "address": {
