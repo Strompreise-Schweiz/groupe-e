@@ -1,37 +1,33 @@
-# Groupe E Electricity Data
+# Groupe E
 
-This repository provides **open electricity data** for [groupe-e](./data/supplier.json).  It is part of the [Strompreise Schweiz](https://www.strompreise-schweiz.ch) initiative.
+Tariff data of Groupe E, published by the
+[Strompreise Schweiz](https://github.com/Strompreise-Schweiz) initiative. All logic lives in
+[`tariff-core`](https://github.com/Strompreise-Schweiz/tariff-core); this repo holds configuration,
+corrections and data.
 
-## Contents
+Everything is listed in `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/index.json`.
 
-- **`/data`**  
-  JSON files containing detailed information about the electricity supplier, its tariffs, and prices.
+## Static tariffs (constant, multilevel)
 
-- **`/assets`**  
-  Supplier logo and related visual assets.
+| What | Stable URL |
+|---|---|
+| Current year | `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/tariffs/current.json` |
+| A given year | `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/tariffs/<year>.json` |
 
-All data is structured in a machine-readable way to support integration with external applications and services.
+The format is the VSE format (NNMV annex 10, OpenAPI) with additional fields: `tariffs[].id`,
+`products` (which tariffs belong together) and `_meta` (source, repairs and corrections).
+Prices exclude VAT.
 
-## Data Validation
+## Structure
 
-Every dataset is automatically validated against the [`supplier-data-validation`](https://github.com/Strompreise-Schweiz/supplier-data-validation) schemas using GitHub Actions. This ensures consistent structure and reliable data quality across suppliers.
+| Path | Content | Who changes it |
+|---|---|---|
+| `config/source.json` | Data sources | Person |
+| `curation/<year>.json` | Corrections and product mapping, each with a reason | Person |
+| `data/**` | Generated data | GitHub Actions only |
 
-## Usage
-
-The data can be freely used for:
-
-- Research and analysis  
-- Integration into applications and services  
-- Visualizations and comparisons  
-
-If you build something cool with it, we’d love to hear about it!
-
-## Website
-
-For more information about the initiative and to explore Swiss electricity tariffs, visit [www.strompreise-schweiz.ch](https://www.strompreise-schweiz.ch).
+Format details: [`SCHEMA.md`](https://github.com/Strompreise-Schweiz/tariff-core/blob/main/SCHEMA.md).
 
 ## License
 
-The data in the [`/data`](./data) folder is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
-
-Logos and other materials in the [`/assets`](./assets) folder are provided for reference only and may be subject to separate rights.
+Not defined yet for this repo. See the [organization page](https://github.com/Strompreise-Schweiz).

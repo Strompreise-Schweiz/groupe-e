@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Strompreise-Schweiz/tariff-core/main/schemas/source-config/v1.schema.json",
+  "slug": "groupe-e",
+  "name": "Groupe E",
+  "country": "CH",
+  "website": "https://www.groupe-e.ch",
+  "vse_id": "CH10063012345",
+  "data_license": "CC-BY-4.0",
+  "dynamic": [
+    {
+      "id": "vario",
+      "name": "Groupe E Vario",
+      "enabled": false,
+      "api_url": "https://api.tariffs.groupe-e.ch/v2/tariffs",
+      "components": [
+        "integrated"
+      ],
+      "note": "Disabled until tested. v2 URL taken from the evcc template, handbook 7.4.1 still shows v1."
+    }
+  ],
+  "static": {
+    "sources": []
+  }
+}

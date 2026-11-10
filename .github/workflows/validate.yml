@@ -1,8 +1,14 @@
-name: Validate assets & data
-on: [push, pull_request]
+name: Validate
+
+on:
+  push:
+    paths-ignore:
+      - "data/dynamic/**"
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  call_validate_supplier:
-    uses: Strompreise-Schweiz/supplier-data-validation/.github/workflows/validate_supplier.yml@main
-    with:
-      supplier_schema_version: v1
+  validate:
+    uses: Strompreise-Schweiz/tariff-core/.github/workflows/reusable-validate.yml@main
