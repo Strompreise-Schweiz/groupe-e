@@ -1,0 +1,13 @@
+{
+  "$comment": "Stable entry point for this organization. All URLs below stay valid.",
+  "organization": "Groupe E",
+  "slug": "groupe-e",
+  "vse_id": "CH10063012345",
+  "website": "https://www.groupe-e.ch",
+  "license": "CC-BY-4.0",
+  "static": {
+    "current": null,
+    "years": {}
+  },
+  "dynamic": []
+}
