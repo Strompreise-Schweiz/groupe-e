@@ -5,14 +5,14 @@ Tariff data of Groupe E, published by the
 [`tariff-core`](https://github.com/Strompreise-Schweiz/tariff-core); this repo holds configuration,
 corrections and data.
 
-Everything is listed in `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/index.json`.
+Everything is listed in `https://data.strompreise-schweiz.ch/groupe-e/index.json`.
 
 ## Static tariffs (constant, multilevel)
 
 | What | Stable URL |
 |---|---|
-| Current year | `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/tariffs/current.json` |
-| A given year | `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/tariffs/<year>.json` |
+| Current year | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/current.json` |
+| A given year | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/<year>.json` |
 
 The format is the VSE format (NNMV annex 10, OpenAPI) with additional fields: `tariffs[].id`,
 `products` (which tariffs belong together) and `_meta` (source, repairs and corrections).
