@@ -1,10 +1,12 @@
 {
-  "$comment": "Stable entry point for this organization. All URLs below stay valid.",
+  "$comment": "Stable entry point for this organization. All URLs below stay valid. Every path under data/ is also served under site.",
   "organization": "Groupe E",
   "slug": "groupe-e",
   "vse_id": "CH10063012345",
   "website": "https://www.groupe-e.ch",
   "license": "CC-BY-4.0",
+  "repository": "https://github.com/Strompreise-Schweiz/groupe-e",
+  "site": "https://data.strompreise-schweiz.ch/groupe-e/",
   "static": {
     "current": null,
     "years": {}
