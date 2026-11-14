@@ -7,19 +7,14 @@
   "vse_id": "CH10063012345",
   "elcom_id": 609,
   "data_license": "CC-BY-4.0",
-  "dynamic": [
+  "tariffs": [],
+  "prices": [
     {
       "id": "vario",
       "name": "Groupe E Vario",
+      "url": "https://api.tariffs.groupe-e.ch/v2/tariffs",
       "enabled": false,
-      "api_url": "https://api.tariffs.groupe-e.ch/v2/tariffs",
-      "components": [
-        "integrated"
-      ],
       "note": "Disabled until tested. v2 URL taken from the evcc template, handbook 7.4.1 still shows v1."
     }
-  ],
-  "static": {
-    "sources": []
-  }
+  ]
 }

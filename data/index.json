@@ -1,5 +1,5 @@
 {
-  "$comment": "Stable entry point for this organization. All URLs below stay valid. Every path under data/ is also served under site.",
+  "$comment": "Stable entry point for this utility. Every path under data/ is also served under site.",
   "organization": "Groupe E",
   "slug": "groupe-e",
   "vse_id": "CH10063012345",
@@ -8,11 +8,11 @@
   "license": "CC-BY-4.0",
   "repository": "https://github.com/Strompreise-Schweiz/groupe-e",
   "site": "https://data.strompreise-schweiz.ch/groupe-e/",
-  "static": {
+  "checks": "https://data.strompreise-schweiz.ch/groupe-e/checks.json",
+  "tariffs": {
     "current": null,
     "years": {}
   },
-  "vse_conformance": "https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/vse-conformance.json",
-  "status": "https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/status.json",
-  "dynamic": []
+  "prices": [],
+  "products": []
 }

@@ -1,0 +1,37 @@
+{
+  "$comment": "What is wrong with the data of this utility. Errors block a year, warnings and accepted issues do not. Information on the VSE conformance does not block anything.",
+  "utility": "Groupe E",
+  "slug": "groupe-e",
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "accepted": 0,
+    "incompleteDays": 0
+  },
+  "vseDefinitions": {
+    "1.0.0": "https://raw.githubusercontent.com/Strompreise-Schweiz/tariff-core/main/schemas/vse/ch-electricity-tariffs-openapi-1.0.0.yaml",
+    "1.0.1": "https://raw.githubusercontent.com/Strompreise-Schweiz/tariff-core/main/schemas/vse/ch-electricity-tariffs-openapi-1.0.1.yaml"
+  },
+  "sources": {
+    "tariffs": [],
+    "prices": [
+      {
+        "id": "vario",
+        "url": "https://api.tariffs.groupe-e.ch/v2/tariffs",
+        "enabled": false,
+        "days": 0,
+        "first": null,
+        "last": null
+      }
+    ]
+  },
+  "tariffs": [],
+  "prices": [
+    {
+      "id": "vario",
+      "days": 0,
+      "incomplete": []
+    }
+  ],
+  "products": []
+}
