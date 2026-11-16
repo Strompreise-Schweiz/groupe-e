@@ -15,42 +15,42 @@ Everything is listed in `https://data.strompreise-schweiz.ch/groupe-e/index.json
 
 ## Where what is
 
-| Question | Place | Changed by |
+| Folder | Holds | Changed by |
 |---|---|---|
-| Where does the data come from? | [`config/source.json`](config/source.json) | a person |
-| What does a person change? | `curation/<year>.json`, each change with a reason | a person |
-| What is wrong with it? | [`data/checks.json`](data/checks.json) | GitHub Actions |
-| What is published? | `data/`: `sources/` as the utility sent it, the rest built from it | GitHub Actions |
+| [`config/source.json`](config/source.json) | where the data comes from | a person |
+| `curation/<year>.json` | corrections and products, each with a reason | a person |
+| `data/sources/` | the files of Groupe E, unchanged: the yearly file and in `days/` what the APIs sent | GitHub Actions |
+| `data/tariffs/` | all tariffs, repaired to VSE 1.0.1 and corrected, with the day prices of the dynamic tariffs | GitHub Actions |
+| `data/products/` | what a customer pays: every component and the total | GitHub Actions |
+| [`data/checks.json`](data/checks.json) | what is wrong with all of the above | GitHub Actions |
 
-## Yearly tariff file
+## What a household pays
+
+Start here. A product is what a customer pays: energy, grid, metering and fees together, excluding
+VAT. `total.fixed` holds the prices per month, `total.windows` the prices per kWh by time of day.
+
+No product yet: no yearly file is configured in `config/source.json`.
+
+## Tariffs
 
 | What | Stable URL |
 |---|---|
-| Current year | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/current.json` |
-| A given year | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/<year>.json` |
+| All tariffs of the current year | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/current.json` |
+| All tariffs of a given year | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/<year>.json` |
+| Day prices of a dynamic tariff, today and tomorrow | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/current/<tariff>.json` |
+| Day prices of a dynamic tariff, one day | `https://data.strompreise-schweiz.ch/groupe-e/tariffs/<year>/<tariff>/<date>.json` |
 
-The VSE format (OpenAPI 1.0.1) with additional fields: `tariffs[].id`, `products` (which tariffs
-belong together) and `_meta` (sources, repairs and corrections). It holds all three tariff forms:
-`constant`, `multilevel` and `dynamic`. For a dynamic tariff, `prices.dynamic.url` points to the day
-prices below. Prices exclude VAT.
+The yearly file is the VSE format (OpenAPI 1.0.1) with additional fields: `tariffs[].id`, `products`
+and `_meta` (sources, repairs and corrections). For a dynamic tariff, `prices.dynamic.url` points to
+its day prices. These are an addition to the yearly file: `tariffs/2026/<tariff>/` holds the days of
+the tariff `<tariff>` in `tariffs/2026.json`.
 
-## Day prices
-
-One file per Swiss calendar day in the format of HDN 2025, chapter 7.4, always in quarter hours.
-`latest.json` holds today and, once published, tomorrow. These URLs never change.
-
-**Price sources**: what one API of the utility sends, with the corrections of `curation/`.
-
-| Source | Valid | Stable URL |
-|---|---|---|
-| Groupe E Vario | open, not enabled | `https://data.strompreise-schweiz.ch/groupe-e/prices/vario/latest.json` |
+The Vario API of Groupe E is configured but not enabled.
 
 Timestamps are Swiss local time with an offset, for example `2026-11-02T00:00:00+01:00`.
 Parse the offset and do not assume 96 intervals: a day has 92 in March and 100 in October.
-Check `_meta.complete` before you use a day.
-
-A past day: `https://data.strompreise-schweiz.ch/groupe-e/<prices|products>/<id>/<year>/<date>.json` for the current year. All years are in git:
-`https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/<prices|products>/<id>/<year>/<date>.json`.
+Check `_meta.complete` before you use a day. The site serves the days of the current year; all years
+are in git under `https://raw.githubusercontent.com/Strompreise-Schweiz/groupe-e/main/data/`.
 
 Format details: [`SCHEMA.md`](https://github.com/Strompreise-Schweiz/tariff-core/blob/main/SCHEMA.md).
 

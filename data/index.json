@@ -1,5 +1,5 @@
 {
-  "$comment": "Stable entry point for this utility. Every path under data/ is also served under site.",
+  "$comment": "Stable entry point for this utility. Every path under data/ is also served under site. Start with products: the default product is what a household pays without choosing anything.",
   "organization": "Groupe E",
   "slug": "groupe-e",
   "vse_id": "CH10063012345",
@@ -9,10 +9,10 @@
   "repository": "https://github.com/Strompreise-Schweiz/groupe-e",
   "site": "https://data.strompreise-schweiz.ch/groupe-e/",
   "checks": "https://data.strompreise-schweiz.ch/groupe-e/checks.json",
+  "products": [],
   "tariffs": {
     "current": null,
-    "years": {}
-  },
-  "prices": [],
-  "products": []
+    "years": {},
+    "days": []
+  }
 }

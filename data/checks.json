@@ -14,7 +14,7 @@
   },
   "sources": {
     "tariffs": [],
-    "prices": [
+    "days": [
       {
         "id": "vario",
         "url": "https://api.tariffs.groupe-e.ch/v2/tariffs",
@@ -26,11 +26,13 @@
     ]
   },
   "tariffs": [],
-  "prices": [
+  "days": [
     {
       "id": "vario",
+      "tariffs": [],
       "days": 0,
-      "incomplete": []
+      "incomplete": [],
+      "withoutTariff": []
     }
   ],
   "products": []
